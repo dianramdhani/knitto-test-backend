@@ -1,0 +1,17 @@
+{
+  "name": "knitto-test-backend",
+  "version": "1.0.0",
+  "description": "Backend for knitto-test project",
+  "scripts": {
+    "serve": "node index.js"
+  },
+  "main": "index.js",
+  "author": "Dian Ramdhani Lubis",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.3",
+    "mysql": "^2.18.1",
+    "util": "^0.12.4"
+  }
+}
