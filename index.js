@@ -1,4 +1,6 @@
+require('dotenv').config();
 const express = require('express');
+var cors = require('cors');
 const path = require('path');
 const multer = require('multer');
 const mysql = require('mysql');
@@ -29,6 +31,8 @@ const query = util.promisify(connection.query).bind(connection);;
 const app = express();
 const port = process.env.PORT || 8001;
 
+app.use(cors());
+
 app.use('/images', express.static(__dirname + '/images'));
 
 app.post(
@@ -39,7 +43,16 @@ app.post(
         const image = req.files['image'][0];
         const sql = "INSERT INTO `image` (`title`, `image_path`, `description`) VALUES ('" + title + "', '" + image.path + "', '" + description + "')";
         await query(sql);
-        return res.send({ message: 'Data uploaded successfully.' });
+        return res.send({ message: 'Data uploaded successfully' });
+    }
+);
+
+app.get(
+    '/api/image',
+    async function (req, res) {
+        const sql = "SELECT * FROM `image` ORDER BY id DESC LIMIT 1";
+        const row = await query(sql);
+        return res.send({ message: 'Get last image data', data: row[0] });
     }
 );
 
